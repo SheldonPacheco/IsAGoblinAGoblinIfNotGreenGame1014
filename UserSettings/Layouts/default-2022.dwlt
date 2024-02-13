@@ -643,15 +643,15 @@ MonoBehaviour:
     m_ExpandedIDs: ffffffff000000004661000048610000aa610000ac610000ae610000b0610000b2610000b4610000b6610000b8610000ba610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Enemy
-      m_OriginalName: Enemy
+      m_Name: Player
+      m_OriginalName: Player
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 2876
+      m_UserData: 3266
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
