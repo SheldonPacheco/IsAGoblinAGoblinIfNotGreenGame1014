@@ -9,12 +9,12 @@ public class Player : MonoBehaviour
     public float meleeAttackRange = 1f;
     public LayerMask enemyLayer; 
     public Color currentColor = Color.white;
-    public Animator meleeAttackAnimator;
     private Rigidbody2D rb;
     private Collider2D col;
     private bool isGrounded;
     private bool isFacingRight = true;
-    private Animator animator; 
+    private Animator animator;
+    public static Vector3 position;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,7 +29,9 @@ public class Player : MonoBehaviour
 
         
         HandleAttacks();
+        HandleMagic();
         HandleJumping();
+        position = transform.position;
     }
     private void FlipSprite()
     {
@@ -75,6 +77,15 @@ public class Player : MonoBehaviour
             MeleeAttack();
         }
     }
+    private void HandleMagic()
+    {
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            MagicAttack();
+        }
+
+    }
     private void HandleJumping()
     {
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -92,29 +103,35 @@ public class Player : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (2f - 1) * Time.deltaTime;
         }
     }
-
     private void MeleeAttack()
     {
-        
-       
         animator.SetTrigger("MeleeAttack");
- 
-        
         animator.Play("MeleeAttack");
-        
-        
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, meleeAttackRange, enemyLayer);
-
-        
-        foreach (Collider2D enemy in hitEnemies)
-        {
-
-        }
-        
+        PerformRaycast();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void MagicAttack()
     {
-        
+        animator.SetTrigger("CastMagic");
+        animator.Play("CastMagic");
+        PerformRaycast();
+    }
+
+    private void PerformRaycast()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, meleeAttackRange, enemyLayer);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            StatSystem.Instance.goblinKills++;
+            Destroy(enemy.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Goblin"))
+        {
+            
+        }
     }
 }

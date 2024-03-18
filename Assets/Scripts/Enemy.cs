@@ -1,70 +1,94 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+
 public class Enemy : MonoBehaviour
 {
-    public Color enemyColor = Color.white;
+    public Color enemyColor = Color.green;
     public int maxHealth = 50;
     public int currentHealth;
 
     public int minDamage = 2;
     public int maxDamage = 9;
 
-    public float wanderSpeed = 3f;
-    public float wanderRadius = 5f;
+    public float wanderSpeed = 1f;
+    public float timer;
+    private Vector2 SpawnPoint;
 
-    private Vector2 wanderPoint;
-
+    private bool movingRight = true;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    public RaycastHit2D hit;
+    public float distanceFromPlayer;
+    Vector2 direction;
     private void Start()
     {
         currentHealth = maxHealth;
-        GetNewWanderPoint();
+        SpawnPoint = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        timer = 3.0f;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         Wander();
-        
+        CheckCollision();
     }
 
     private void Wander()
     {
-        transform.Translate(wanderPoint * wanderSpeed * Time.deltaTime);
-
-        
-        if (Vector2.Distance(transform.position, wanderPoint) < 0.1f)
+        if (movingRight)
         {
-            GetNewWanderPoint();
+            animator.SetBool("Walking", true);
+            spriteRenderer.flipX = false;
+
+            transform.Translate(Vector2.right * wanderSpeed * Time.deltaTime);
+            if (Vector2.Distance(SpawnPoint, transform.position) > 5.0f)
+            {
+                movingRight = false;
+
+              
+            }
+        }
+        else if (!movingRight) {
+            animator.SetBool("Walking", true);
+            spriteRenderer.flipX = true;
+            transform.Translate(Vector2.left * wanderSpeed * Time.deltaTime);
+            timer -= Time.deltaTime;
+            if (timer <= 0.0f)
+            {
+                if (Vector2.Distance(SpawnPoint, transform.position) > 3.0f)
+                {
+                    movingRight = true;
+                    timer = 3.0f;
+
+
+                }
+            }
+        }
+        else {
+            animator.SetBool("Walking", false);
         }
     }
 
-    private void GetNewWanderPoint()
+    private void CheckCollision()
     {
-        wanderPoint = (Vector2)transform.position + Random.insideUnitCircle * wanderRadius;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        
-        currentHealth -= damage;
+        direction = movingRight ? Vector2.right : Vector2.left;
 
         
-        if (currentHealth <= 0)
+        hit = Physics2D.Raycast(transform.position, direction, 3.0f);
+
+        
+        Debug.DrawRay(transform.position, direction * 3.0f, Color.red);
+
+        
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            Die();
+            animator.SetBool("MeleeAttack", true);
         }
-    }
-
-    public int DealDamage()
-    {
-        
-        return Random.Range(minDamage, maxDamage + 1);
-    }
-
-    private void Die()
-    {
-        
-       
+        else
+        {
+            animator.SetBool("MeleeAttack", false);
+        }
     }
 }
-

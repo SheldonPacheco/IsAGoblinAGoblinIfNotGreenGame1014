@@ -3,7 +3,9 @@ guid: 9be8b5a3a1ce73a40ab0b0065345ef90
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - goblin: {fileID: 173762143995643829, guid: 077d28d990ae57b4ca8b7bda34316e3a, type: 3}
+  - spawnPoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
