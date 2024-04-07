@@ -9,7 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroLevel.unity
     guid: 43e955c7bf658f644b16486ff1f246b2
   - enabled: 1
-    path: Assets/Scenes/CastleLevel.unity
+    path: Assets/Scenes/CastleLevel1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/BossLevel.unity
+    guid: 408b49f9c07a0e14eb5562afa19597b1
+  - enabled: 1
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 636a4af8dc21e6f4db05be4cba1204a5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

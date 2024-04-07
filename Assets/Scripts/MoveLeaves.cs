@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveLeaves : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class MoveLeaves : MonoBehaviour
 
     private bool continueMoving = true;
     private Animator animator;
-
+    public AnimationClip LeavesColoured;
+    public AnimationClip Leaves;
     void Start()
     {
         originalPosition = transform.position;
@@ -55,10 +57,21 @@ public class MoveLeaves : MonoBehaviour
                 animator.Play("Idle");
             }
         }
+        if (SceneManager.GetActiveScene().name == "IntroLevel")
+        {
+            if (StatSystem.Instance.goblinKills > 2)
+            {
+                ChangeLeavesAnimationClip(LeavesColoured);
+            }
+            else
+            {
+                ChangeLeavesAnimationClip(Leaves);
+            }
+        }
     }
 
-    
-    void MoveLeft()
+
+        void MoveLeft()
     {       
         if (animator.HasState(0, Animator.StringToHash("Leaves")))
         {
@@ -87,6 +100,16 @@ public class MoveLeaves : MonoBehaviour
             continueMoving = false;
             
 
+        }
+    }
+    void ChangeLeavesAnimationClip(AnimationClip clipPath)
+    {
+        AnimationClip newClip = clipPath;
+        if (newClip != null)
+        {
+            AnimatorOverrideController overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            overrideController["Leaves"] = newClip;
+            animator.runtimeAnimatorController = overrideController;
         }
     }
 }
