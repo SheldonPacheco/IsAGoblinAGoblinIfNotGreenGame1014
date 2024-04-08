@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -165,7 +164,7 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("DoorToNextLevel"))
         {
-            if (StatSystem.Instance.goblinKills == 6)
+            if (StatSystem.Instance.goblinKills >= 6)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 StatSystem.Instance.levelLoadCount++;
