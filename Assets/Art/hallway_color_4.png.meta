@@ -182,7 +182,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hallway_color_4_0: -4057415257632650367
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

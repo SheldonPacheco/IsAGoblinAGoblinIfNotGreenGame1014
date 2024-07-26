@@ -182,7 +182,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      throneroom_color_3_0: -7386364835701236060
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
