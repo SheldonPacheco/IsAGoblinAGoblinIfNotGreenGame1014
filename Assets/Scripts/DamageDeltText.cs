@@ -17,7 +17,7 @@ public class DamageDeltText : MonoBehaviour
             transform.position = Player.Instance.transform.position;
             gameObject.GetComponent<TMP_Text>().rectTransform.position = Player.Instance.transform.position;
         }
-        gameObject.GetComponent<Rigidbody2D>().velocity += Vector2.up * 2f;
+        gameObject.GetComponent<Rigidbody2D>().linearVelocity += Vector2.up * 2f;
     }
 
     // Update is called once per frame

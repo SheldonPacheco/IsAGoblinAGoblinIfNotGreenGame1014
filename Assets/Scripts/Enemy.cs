@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
                     
                 StatSystem.Instance.TakeDamage(hit.collider.gameObject.GetComponent<Player>().gameObject, StatSystem.Instance.DealDamage(5, 8));
 
-                hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = (Vector3.up * 5.1f);
+                hit.collider.gameObject.GetComponent<Rigidbody2D>().linearVelocity = (Vector3.up * 5.1f);
                 
                 if (hit.collider.gameObject.GetComponent<Player>().currentHealth <= 0)
                 {

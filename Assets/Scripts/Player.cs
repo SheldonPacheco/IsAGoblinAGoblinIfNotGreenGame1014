@@ -62,8 +62,8 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector2 movement = new Vector2(horizontalInput * movementSpeed, rb.velocity.y);
-        rb.velocity = movement;
+        Vector2 movement = new Vector2(horizontalInput * movementSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = movement;
 
         if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
         {
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
     private void HandleAttacks()
@@ -110,17 +110,17 @@ public class Player : MonoBehaviour
     {
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
         
-        if (rb.velocity.y < 0)
+        if (rb.linearVelocity.y < 0)
         {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (2.5f - 1) * Time.deltaTime;
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (2.5f - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        else if (rb.linearVelocity.y > 0 && !Input.GetKey(KeyCode.Space))
         {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (2f - 1) * Time.deltaTime;
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (2f - 1) * Time.deltaTime;
         }
     }
     private void MeleeAttack()
@@ -144,11 +144,11 @@ public class Player : MonoBehaviour
         {
             if ( isFacingRight == true)
             {
-                    enemy.GetComponent<Rigidbody2D>().velocity += Vector2.up * 2f + Vector2.right * 2f;
+                    enemy.GetComponent<Rigidbody2D>().linearVelocity += Vector2.up * 2f + Vector2.right * 2f;
 
             } else if ( isFacingRight == false)
             {
-                    enemy.GetComponent<Rigidbody2D>().velocity += Vector2.up * 2f + Vector2.left * 2f;
+                    enemy.GetComponent<Rigidbody2D>().linearVelocity += Vector2.up * 2f + Vector2.left * 2f;
             }
             StatSystem.Instance.TakeDamage(enemy.gameObject.GetComponent<Enemy>().gameObject, StatSystem.Instance.DealDamage(10,10));
             if (enemy.gameObject.GetComponent<Enemy>().currentHealth <= 0)
